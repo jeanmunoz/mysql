@@ -1,0 +1,132 @@
+SAKILA EJERCICIOS SQL
+
+1.-
+SELECT
+	address.city_id,
+	city.city,
+	customer.first_name,
+	customer.last_name,
+	customer.email,
+	address.address
+FROM address, city, customer
+WHERE address.address_id = customer.address_id AND city.city_id = address.city_id AND address.city_id = 312;
+
+2.-
+SELECT
+    film.film_id,
+    film.title,
+    film.description,
+    film.release_year,
+    film.rating, 
+    film.special_features,
+    category.name
+FROM film, category, film_category
+WHERE film.film_id = film_category.film_id AND film_category.category_id = category.category_id AND film_category.category_id = 5;
+
+3.-
+SELECT
+    actor.actor_id,
+    CONCAT(actor.first_name," ",actor.last_name) AS name,
+    film.film_id,
+    film.title,
+    film.description,
+    film.release_year
+FROM film, film_actor, actor
+WHERE film.film_id=film_actor.film_id AND film_actor.actor_id=actor.actor_id and actor.actor_id=5;
+
+4.-
+SELECT
+    customer.store_id,
+    address.city_id,
+    customer.first_name,
+    customer.last_name,
+    customer.email,
+    address.address
+FROM
+    customer,
+    address
+WHERE
+    customer.address_id=address.address_id AND (address.city_id=1 OR address.city_id=42 OR address.city_id=312 OR address.city_id=459) AND customer.store_id=1;
+
+==============CON IN====================
+SELECT
+    customer.store_id,
+    address.city_id,
+    customer.first_name,
+    customer.last_name,
+    customer.email,
+    address.address
+FROM
+    customer,
+    address
+ON
+    customer.address_id=address.address_id AND address.city_id IN (1,42,312,459) AND customer.store_id=1;
+
+
+
+
+
+5.-
+SELECT  
+    film.title,
+    film.description,
+    film.release_year,
+    film.rating,
+    film.special_features
+FROM  
+    film, film_actor
+WHERE 
+    film.film_id=film_actor.film_id AND film_actor.actor_id=15 AND
+    film.special_features LIKE '%behind the scenes%' AND film.rating='G';
+
+6.-
+SELECT 
+    film.film_id,
+    film.title,
+    film_actor.actor_id,
+    CONCAT(actor.first_name," ",actor.last_name) AS name
+FROM
+    film,
+    film_actor,
+    actor
+WHERE
+    film.film_id=film_actor.film_id AND film_actor.actor_id=actor.actor_id AND film.film_id=369;
+
+7.-
+SELECT 
+    film.film_id,
+    film.title,
+    film.description,
+    film.release_year,
+    film.rating,
+    film.special_features,
+    category.name,
+    film.rental_rate
+FROM 
+    film,
+    category,
+    film_category
+WHERE 
+    film_category.category_id=7 AND film.rental_rate=2.99 AND film.film_id=film_category.film_id AND film_category.category_id=category.category_id;
+
+8.-
+SELECT
+	film_actor.actor_id,
+    CONCAT(actor.first_name, " ", actor.last_name) AS name_u_otro,
+    film.film_id,
+    film.title,
+    film.description,
+    film.release_year,
+    film.rating,
+    film.special_features,
+    category.name
+FROM
+	film,
+    film_actor,
+    category,
+    actor,
+    film_category
+WHERE
+	film.film_id=film_category.film_id AND film_category.category_id=category.category_id AND
+    film.film_id=film_actor.film_id AND film_actor.actor_id=actor.actor_id
+    AND category.category_id=1 AND actor.actor_id=23;
